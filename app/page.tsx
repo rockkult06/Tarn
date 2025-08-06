@@ -1,8 +1,20 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Heart, ShoppingBag, Eye, Info, Star, X, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
+
+interface Particle {
+  id: number
+  x: number
+  y: number
+  vx: number
+  vy: number
+  size: number
+  opacity: number
+  life: number
+  maxLife: number
+}
 
 interface Review {
   id: string
@@ -263,6 +275,113 @@ const collections = [
   { id: "kurban", name: "Kurban" }
 ]
 
+// Particle Effect Component
+const ParticleEffect = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const particlesRef = useRef<Particle[]>([])
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const animationRef = useRef<number>()
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    // Canvas boyutunu ayarla
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+
+    // Mouse hareket takibi
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY }
+      
+      // Mouse etrafında yeni partiküller oluştur
+      for (let i = 0; i < 3; i++) {
+        createParticle(e.clientX, e.clientY)
+      }
+    }
+
+    // Partiküller oluştur
+    const createParticle = (x: number, y: number) => {
+      const particle: Particle = {
+        id: Math.random(),
+        x: x + (Math.random() - 0.5) * 20,
+        y: y + (Math.random() - 0.5) * 20,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        size: Math.random() * 3 + 1,
+        opacity: Math.random() * 0.5 + 0.1,
+        life: 0,
+        maxLife: Math.random() * 60 + 40
+      }
+      particlesRef.current.push(particle)
+    }
+
+    // Animasyon döngüsü
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      // Partikülleri güncelle ve çiz
+      particlesRef.current = particlesRef.current.filter(particle => {
+        particle.life++
+        particle.x += particle.vx
+        particle.y += particle.vy
+        particle.vy += 0.02 // Hafif yerçekimi
+        particle.opacity = (1 - particle.life / particle.maxLife) * 0.3
+
+        // Mouse'a doğru hafif çekim
+        const dx = mouseRef.current.x - particle.x
+        const dy = mouseRef.current.y - particle.y
+        const distance = Math.sqrt(dx * dx + dy * dy)
+        
+        if (distance < 100) {
+          particle.vx += dx * 0.0001
+          particle.vy += dy * 0.0001
+        }
+
+        // Partikülleri çiz
+        ctx.save()
+        ctx.globalAlpha = particle.opacity
+        ctx.fillStyle = '#666'
+        ctx.beginPath()
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.restore()
+
+        return particle.life < particle.maxLife
+      })
+
+      animationRef.current = requestAnimationFrame(animate)
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    animate()
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas)
+      window.removeEventListener('mousemove', handleMouseMove)
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-0"
+      style={{ background: 'transparent' }}
+    />
+  )
+}
+
 export default function Component() {
   const [selectedProductSet, setSelectedProductSet] = useState<ProductSet | null>(null)
   const [selectedItem, setSelectedItem] = useState<ClothingItem | null>(null)
@@ -362,7 +481,10 @@ export default function Component() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative">
+      {/* Particle Effect Background */}
+      <ParticleEffect />
+      
       {/* Header - Sticky with Glass Morphism */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-sm">
         <div className="container mx-auto px-6 py-4">
@@ -428,7 +550,7 @@ export default function Component() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-6 pt-24">
+      <main className="container mx-auto px-6 py-6 pt-24 relative z-10">
         {/* Hero Section - Compact */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-3">
@@ -782,7 +904,7 @@ export default function Component() {
       )}
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 mt-12">
+      <footer className="bg-gray-900 text-white py-12 mt-12 relative z-10">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
@@ -823,7 +945,7 @@ export default function Component() {
       </footer>
 
       {/* Help Button */}
-      <div className="fixed bottom-8 right-8">
+      <div className="fixed bottom-8 right-8 z-30">
         <Button 
           className="w-14 h-14 rounded-full bg-black hover:bg-gray-800 text-white font-medium text-xs transition-all duration-300 shadow-lg hover:shadow-xl"
           size="lg"
