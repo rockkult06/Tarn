@@ -303,7 +303,7 @@ const ParticleEffect = () => {
       mouseRef.current = { x: e.clientX, y: e.clientY }
       
       // Mouse etrafında yeni partiküller oluştur
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 5; i++) {
         createParticle(e.clientX, e.clientY)
       }
     }
@@ -312,14 +312,14 @@ const ParticleEffect = () => {
     const createParticle = (x: number, y: number) => {
       const particle: Particle = {
         id: Math.random(),
-        x: x + (Math.random() - 0.5) * 20,
-        y: y + (Math.random() - 0.5) * 20,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        size: Math.random() * 3 + 1,
-        opacity: Math.random() * 0.5 + 0.1,
+        x: x + (Math.random() - 0.5) * 30,
+        y: y + (Math.random() - 0.5) * 30,
+        vx: (Math.random() - 0.5) * 1,
+        vy: (Math.random() - 0.5) * 1,
+        size: Math.random() * 0.8 + 0.2,
+        opacity: Math.random() * 0.15 + 0.05,
         life: 0,
-        maxLife: Math.random() * 60 + 40
+        maxLife: Math.random() * 80 + 60
       }
       particlesRef.current.push(particle)
     }
@@ -333,8 +333,8 @@ const ParticleEffect = () => {
         particle.life++
         particle.x += particle.vx
         particle.y += particle.vy
-        particle.vy += 0.02 // Hafif yerçekimi
-        particle.opacity = (1 - particle.life / particle.maxLife) * 0.3
+        particle.vy += 0.01 // Hafif yerçekimi
+        particle.opacity = (1 - particle.life / particle.maxLife) * 0.1
 
         // Mouse'a doğru hafif çekim
         const dx = mouseRef.current.x - particle.x
@@ -346,12 +346,22 @@ const ParticleEffect = () => {
           particle.vy += dy * 0.0001
         }
 
-        // Partikülleri çiz
+        // Partikülleri çiz - bulanık toz efekti
         ctx.save()
         ctx.globalAlpha = particle.opacity
-        ctx.fillStyle = '#666'
+        ctx.filter = 'blur(0.5px)'
+        
+        // Gradient ile daha yumuşak görünüm
+        const gradient = ctx.createRadialGradient(
+          particle.x, particle.y, 0,
+          particle.x, particle.y, particle.size * 2
+        )
+        gradient.addColorStop(0, '#888')
+        gradient.addColorStop(1, 'transparent')
+        
+        ctx.fillStyle = gradient
         ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+        ctx.arc(particle.x, particle.y, particle.size * 2, 0, Math.PI * 2)
         ctx.fill()
         ctx.restore()
 
