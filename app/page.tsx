@@ -417,9 +417,9 @@ export default function Component() {
           
           {/* Collection Manifesto - Modern Minimalist Design */}
           <div className="max-w-2xl mx-auto text-center mb-8 relative">
-            <div className="bg-gradient-to-r from-gray-900 via-black to-gray-900 p-8 rounded-2xl relative overflow-hidden">
+            <div className="bg-gradient-to-r from-gray-900/30 via-black/40 to-gray-900/30 p-8 rounded-2xl relative overflow-hidden backdrop-blur-sm border border-white/10">
               {/* Subtle overlay pattern */}
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/3 to-transparent"></div>
               
               {/* Content */}
               <div className="relative z-10">
