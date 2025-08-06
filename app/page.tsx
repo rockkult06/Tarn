@@ -68,7 +68,7 @@ const allProductSets: ProductSet[] = [
     id: "mor-ve-otesi-set",
     mainImage: "/mor-ve-otesi-tshirt.png",
     title: "Mor ve Ötesi Collection",
-    detailImages: ["/mor-ve-otesi-tshirt.png"],
+    detailImages: ["/mor ve ötei detay.png", "/mor ve ötesi detay 2.png"],
     items: [
       {
         id: "mor-ve-otesi-tee",
@@ -90,7 +90,7 @@ const allProductSets: ProductSet[] = [
     id: "kara-orkestra-set",
     mainImage: "/kara-orkestra-tshirt.png",
     title: "Kara Orkestra Collection",
-    detailImages: ["/kara-orkestra-detay-1.png", "/kara-orkestra-detay-2.png"],
+    detailImages: ["/kara-orkestra-tshirt.png", "/kara-orkestra-detay-1.png", "/kara-orkestra-detay-2.png"],
     items: [
       {
         id: "kara-orkestra-tee",
@@ -124,15 +124,15 @@ const allProductSets: ProductSet[] = [
   },
   {
     id: "duman-set",
-    mainImage: "/duman-main.png",
+    mainImage: "/duman main.png",
     title: "Duman Craft Collection",
-    detailImages: ["/duman-main-2.png", "/duman-detay-1.png", "/duman-detay-2.png", "/duman-detay-3.png", "/duman-detay-4.png"],
+    detailImages: ["/duman main.png", "/duman main 2.png", "/duman main 3.png", "/duman detay.png", "/duman detay 2.png"],
     items: [
       {
         id: "duman-craft-tee",
         name: "Duman Craft Tee",
         price: "€42.90",
-        image: "/duman-main.png",
+        image: "/duman main.png",
         colors: ["#8B7355", "#A0956B", "#6B5B47"],
         story: "Ancient craftsmanship meets modern rebellion. The potter's wheel spins eternal stories.",
         material: "100% Organic Cotton, enzyme washed",
@@ -146,7 +146,7 @@ const allProductSets: ProductSet[] = [
         id: "duman-vintage-car",
         name: "Duman Vintage Car",
         price: "€44.90",
-        image: "/duman-main-2.png",
+        image: "/duman main 2.png",
         colors: ["#2D2D2D", "#3D3D3D"],
         story: "Journey through time with vintage automotive nostalgia. Where memories meet the road.",
         material: "100% Cotton, vintage treatment",
@@ -160,7 +160,7 @@ const allProductSets: ProductSet[] = [
         id: "duman-ravens",
         name: "Duman Ravens",
         price: "€43.90",
-        image: "/duman-detay-1.png",
+        image: "/duman main 3.png",
         colors: ["#2D2D2D", "#4A4A4A"],
         story: "The mysterious figure walks among ravens. A tale of solitude and ancient wisdom.",
         material: "100% Organic Cotton, soft-hand feel",
@@ -176,7 +176,7 @@ const allProductSets: ProductSet[] = [
     id: "athena-set",
     mainImage: "/athena-main.png",
     title: "Athena Gothic Collection",
-    detailImages: ["/athena-main-2.png"],
+    detailImages: ["/athena-main.png", "/athena-main-2.png", "/athena-tshirt.png"],
     items: [
       {
         id: "athena-gothic-tee",
@@ -210,15 +210,15 @@ const allProductSets: ProductSet[] = [
   },
   {
     id: "rashit-set",
-    mainImage: "/rashit-collection-dark-art.png",
+    mainImage: "/rashit main.png",
     title: "Rashit Collection",
-    detailImages: [],
+    detailImages: ["/rashit main.png", "/rashit main 1.png"],
     items: [
       {
         id: "rashit-tee",
         name: "Rashit Tee",
         price: "€47.90",
-        image: "/rashit-tshirt.png",
+        image: "/rashit main.png",
         colors: ["#2D2D2D", "#4A4A4A"],
         story: "Experimental artistry meets street culture. Bold expressions for the fearless.",
         material: "100% Organic Cotton, heavyweight",
@@ -232,15 +232,15 @@ const allProductSets: ProductSet[] = [
   },
   {
     id: "kurban-set",
-    mainImage: "/kurban-collection-gothic.png",
+    mainImage: "/kurban main.png",
     title: "Kurban Collection",
-    detailImages: [],
+    detailImages: ["/kurban main.png", "/kurban main 2.png", "/kurban jacket detay.png", "/kurban jacket detay 2.png"],
     items: [
       {
         id: "kurban-tee",
         name: "Kurban Tee",
         price: "€46.90",
-        image: "/kurban-tshirt-gothic.png",
+        image: "/kurban main.png",
         colors: ["#1A1A1A", "#2D2D2D"],
         story: "Sacrifice and rebirth. Ancient rituals reimagined for modern souls.",
         material: "100% Ring-spun Cotton, garment dyed",
