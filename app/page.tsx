@@ -301,6 +301,30 @@ export default function Component() {
     setFavorites(newFavorites)
   }
 
+  const handleCollectionSelect = (collectionId: string) => {
+    // Collection ID'sine göre ilgili ProductSet'i bul
+    const productSet = allProductSets.find(set => {
+      // ID mapping yapısı
+      const idMapping: { [key: string]: string } = {
+        'mor-ve-otesi': 'mor-ve-otesi-set',
+        'kara-orkestra': 'kara-orkestra-set',
+        'duman': 'duman-set',
+        'athena': 'athena-set',
+        'rashit': 'rashit-set',
+        'kurban': 'kurban-set'
+      }
+      return set.id === idMapping[collectionId]
+    })
+    
+    if (productSet) {
+      setSelectedProductSet(productSet)
+      setSelectedItem(productSet.items[0])
+      setSelectedSize('')
+      setCurrentImageIndex(0)
+      setCollectionsDropdownOpen(false)
+    }
+  }
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -369,11 +393,7 @@ export default function Component() {
                     {collections.map((collection) => (
                       <button
                         key={collection.id}
-                        onClick={() => {
-                          setCollectionsDropdownOpen(false)
-                          // Navigate to collection page (placeholder for now)
-                          console.log(`Navigate to ${collection.name} collection`)
-                        }}
+                        onClick={() => handleCollectionSelect(collection.id)}
                         className="w-full text-left px-4 py-2 text-sm font-medium text-gray-700 hover:bg-black/5 hover:text-gray-900 transition-colors"
                       >
                         {collection.name}
