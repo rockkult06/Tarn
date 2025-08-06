@@ -438,10 +438,10 @@ export default function Component() {
           {/* CTA Buttons - Smaller */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
             <Button 
-              onClick={() => setShowAllCollections(true)}
+              onClick={() => setShowAllCollections(!showAllCollections)}
               className="bg-black hover:bg-gray-800 text-white px-6 py-2 text-xs font-medium tracking-wider uppercase"
             >
-              Discover the Full Collection
+              {showAllCollections ? 'Show Featured Collections' : 'Discover the Full Collection'}
             </Button>
             <Button variant="outline" className="border-black text-black hover:bg-black hover:text-white px-6 py-2 text-xs font-medium tracking-wider uppercase">
               Shop TARN AW2025
